@@ -46,7 +46,7 @@ class BSTree {
         }
 
         //Recorrido
-        void print_inorder(std::ostream &out, BSNode<T>* n) const{
+        void print_inorder(ostream &out, BSNode<T>* n) const{
             if(n != nullptr) {
 				print_inorder(out, n->left); //Imprimir primero el lado izq
 				out << n->elem << " ";
@@ -65,7 +65,7 @@ class BSTree {
 
         BSNode<T>* remove_max(BSNode<T>* n){
             if (n == nullptr) {
-                throw std::runtime_error("Árbol vacío");
+                throw runtime_error("Árbol vacío");
             }
             
             if (n->right == nullptr) {
@@ -81,7 +81,7 @@ class BSTree {
         BSNode<T>* remove(BSNode<T>* n, T e){
 
             if (n == nullptr) {
-                throw std::runtime_error("Elemento no encontrado");
+                throw runtime_error("Elemento no encontrado");
             }
             
             if (e < n->elem) {
@@ -93,7 +93,6 @@ class BSTree {
             }
             
             else {
-                // Encontramos el nodo a eliminar (e == n->elem)
                 
                 // Caso 1: Nodo con un solo hijo
                 if (n->left == nullptr) {
@@ -155,7 +154,7 @@ class BSTree {
 
 
         //Recorrido
-        friend std::ostream& operator<<(std::ostream &out, const BSTree<T> &bst){
+        friend ostream& operator<<(ostream &out, const BSTree<T> &bst){
             print_inorder(out,bst.root);
 
             return out;
