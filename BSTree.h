@@ -15,7 +15,7 @@ class BSTree {
         BSNode<T>* root; //Nodo raiz
 
         //Busqueda
-        BSNode<T>* search(BSNode<T>* n, T e) const{
+        BSNode<T>* searchNode(BSNode<T>* n, T e) const{
             if (n == nullptr) {
                 throw runtime_error("Elemento no encontrado");
             }
@@ -24,11 +24,11 @@ class BSTree {
                 return n;
             }
 
-            if(n->elem>e){
-                return search(n->left, e);
+            if(e < n->elem){
+                return searchNode(n->left, e);
             }
 
-            return search(n->right, e);
+            return searchNode(n->right, e);
 
         }
 
@@ -40,10 +40,10 @@ class BSTree {
             if(n->elem==e){
                 throw runtime_error("El elemento ya existe");
             }
-            if(n->elem>e){
+            if(e < n->elem){
                 n->left = insert(n->left, e);
             }
-            if(n->elem<e){
+            if(e > n->elem){
                 n->right = insert(n->right, e);
             }
 
@@ -77,7 +77,10 @@ class BSTree {
             }
             
             if (n->right == nullptr) {
-                return n->left;
+                BSNode<T>* leftChild = n->left;
+
+                delete n;
+                return leftChild;
             }
 
             n->right = remove_max(n->right); //Elimina el max
@@ -92,10 +95,12 @@ class BSTree {
             
             if (e < n->elem) {
                 n->left = remove(n->left, e);
+                return n;
             }
 
             else if (e > n->elem) {
                 n->right = remove(n->right, e);
+                return n;
             }
             
             else {
@@ -115,7 +120,7 @@ class BSTree {
                     delete n;
                     return leftChild;
                 } 
-
+                
                 // Caso 2: Nodo con dos hijos
                 else {
                     // Reemplazar por el máximo del subárbol izquierdo
@@ -124,8 +129,7 @@ class BSTree {
 
                     return n;
                 }
-            }                        
-            return n;
+            }
         }
 
         void delete_cascade(BSNode<T>* n){
@@ -146,7 +150,7 @@ class BSTree {
 
         //Busqueda
         T search(T e) const{
-            BSNode<T>* aux = search(root, e);
+            BSNode<T>* aux = searchNode(root, e);
             return aux->elem;
         }
 

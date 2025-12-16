@@ -12,7 +12,7 @@ class BSNode {
         BSNode<T>* left;    //Puntero a lado Izq
         BSNode<T>* right;   //Puntero a lado Dch
 
-        BSNode(T elem, BSNode<T>* left=nullptr, BSNode<T>* right=nullptr):elem(elem),left(nullptr),right(nullptr) {}
+        BSNode(T elem, BSNode<T>* left=nullptr, BSNode<T>* right=nullptr):elem(elem),left(left),right(right) {}
 
         friend std::ostream& operator<<(std::ostream &out, const BSNode<T> &bsn){
             out<< bsn.elem;
