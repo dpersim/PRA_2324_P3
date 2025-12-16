@@ -8,7 +8,7 @@ using namespace std;
 template <typename T> 
 class BSNode {
     public:
-        T* elem;    //Elemento almacenado en el nodo
+        T elem;    //Elemento almacenado en el nodo
         BSNode<T>* left;    //Puntero a lado Izq
         BSNode<T>* right;   //Puntero a lado Dch
 

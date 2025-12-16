@@ -1,3 +1,4 @@
+
 #ifndef BSTREE_H
 #define BSTREE_H
 
@@ -40,10 +41,10 @@ class BSTree {
                 throw runtime_error("El elemento ya existe");
             }
             if(n->elem>e){
-                return insert(n->left, e);
+                n->left = insert(n->left, e);
             }
             if(n->elem<e){
-                return insert(n->left, e);
+                n->right = insert(n->right, e);
             }
 
             return n;
@@ -102,13 +103,10 @@ class BSTree {
                 // Caso 1: Nodo con un solo hijo
 
                 if (n->left == nullptr) {
-
                     BSNode<T>* rightChild = n->right;
 
                     delete n;
-
                     return rightChild;
-
                 } 
 
                 else if (n->right == nullptr) {
@@ -118,18 +116,15 @@ class BSTree {
                     return leftChild;
                 } 
 
-
                 // Caso 2: Nodo con dos hijos
                 else {
                     // Reemplazar por el máximo del subárbol izquierdo
                     n->elem = max(n->left);
-
                     n->left = remove_max(n->left);
 
                     return n;
                 }
-            }
-                        
+            }                        
             return n;
         }
 
@@ -151,7 +146,8 @@ class BSTree {
 
         //Busqueda
         T search(T e) const{
-            return search(root,e);
+            BSNode<T>* aux = search(root, e);
+            return aux->elem;
         }
 
         T operator[](T e) const{
