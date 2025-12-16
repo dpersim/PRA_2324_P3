@@ -27,7 +27,8 @@ class BSTree {
                 return search(n->left, e);
             }
 
-            return search(n->left, e);
+            return search(n->right, e);
+
         }
 
         //Insertar
@@ -39,10 +40,13 @@ class BSTree {
                 throw runtime_error("El elemento ya existe");
             }
             if(n->elem>e){
-                return search(n->left, e);
+                return insert(n->left, e);
+            }
+            if(n->elem<e){
+                return insert(n->left, e);
             }
 
-            return search(n->left, e);
+            return n;
         }
 
         //Recorrido
@@ -58,6 +62,9 @@ class BSTree {
 
         T max(BSNode<T>* n) const{
             if(n==nullptr){
+                throw runtime_error("Árbol vacío");
+            }
+            if(n->right==nullptr){
                 return n->elem;
             }
             return max(n->right);
@@ -69,9 +76,7 @@ class BSTree {
             }
             
             if (n->right == nullptr) {
-                BSNode<T>* leftChild = n->left; //Mira si el nodo max tiene hijos izquierdos
-                delete n;
-                return leftChild; //Recoloca el hijo izq
+                return n->left;
             }
 
             n->right = remove_max(n->right); //Elimina el max
@@ -93,28 +98,38 @@ class BSTree {
             }
             
             else {
-                
+                // Encontramos el nodo a eliminar (e == n->elem)
                 // Caso 1: Nodo con un solo hijo
+
                 if (n->left == nullptr) {
+
                     BSNode<T>* rightChild = n->right;
+
                     delete n;
+
                     return rightChild;
+
                 } 
 
                 else if (n->right == nullptr) {
                     BSNode<T>* leftChild = n->left;
+
                     delete n;
                     return leftChild;
                 } 
+
+
                 // Caso 2: Nodo con dos hijos
                 else {
                     // Reemplazar por el máximo del subárbol izquierdo
                     n->elem = max(n->left);
+
                     n->left = remove_max(n->left);
+
                     return n;
                 }
             }
-            
+                        
             return n;
         }
 
@@ -136,9 +151,7 @@ class BSTree {
 
         //Busqueda
         T search(T e) const{
-            BSNode<T>* aux = search(root, e);
-
-            return aux->elem;
+            return search(root,e);
         }
 
         T operator[](T e) const{
@@ -147,22 +160,20 @@ class BSTree {
 
         //Insertar
         void insert(T e){
-            BSNode<T>* aux = search(root, e);
-            insert(aux);
+            root = insert(root, e);
             nelem++;
         }
 
 
         //Recorrido
         friend ostream& operator<<(ostream &out, const BSTree<T> &bst){
-            print_inorder(out,bst.root);
-
+            bst.print_inorder(out,bst.root);
             return out;
         }
 
         //Eliminación de elementos
         void remove(T e){
-            remove(root,e);
+            root=remove(root,e);
             nelem--;
         }
 

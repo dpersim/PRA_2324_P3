@@ -14,7 +14,7 @@ class BSTreeDict: public Dict<V> {
 
     private:
 
-        BSTree<TableEntry<V>>* tree;
+        BSTree<TableEntry<V>> *tree;
 
     public:
 

@@ -18,6 +18,8 @@ class HashTable: public Dict<V> {
         int n; //elementos almacenados
         int max; //Tamño tabla
         ListLinked<TableEntry<V>>* table; //Tabla que alamcena valores y claves
+
+        //calcula la clave
         int h(string key){
             int ASCIIsum=0;
             for(char c : key){
@@ -36,6 +38,7 @@ class HashTable: public Dict<V> {
         }
         friend ostream& operator<<(ostream &out, const HashTable<V> &th){
             for(int i=0;i<th.max;i++){
+		out<<"=== Cubeta "<< i <<" ==="<<endl;
                 out<<th.table[i]<<endl;
             }
             return out;
@@ -49,6 +52,7 @@ class HashTable: public Dict<V> {
             
             // Buscar si ya existe la clave
             int pos = table[index].search(newEntry);
+
             if(pos != -1){
                 throw runtime_error("Ya hay una entrada con esa clave");
             }
@@ -57,6 +61,7 @@ class HashTable: public Dict<V> {
             table[index].append(newEntry);
             n++;
         }
+
         V search(string key) override{
             int index = h(key);
             TableEntry<V> tempEntry(key); // Crea TableEntry solo con la clave para buscar
@@ -69,6 +74,7 @@ class HashTable: public Dict<V> {
             TableEntry<V> foundEntry = table[index].get(pos);
             return foundEntry.value;
         }
+        
         V remove(string key) override{
             int index = h(key);
             TableEntry<V> tempEntry(key); // Crea TableEntry solo con la clave para buscar
